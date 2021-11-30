@@ -1,34 +1,37 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+
 import Blogs from './components/Blogs'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
+
 import blogService from './services/blogs'
 import loginService from './services/login'
 
+import { initializeBlogs } from './reducers/blogReducer'
+import { loggedInUser, setUser } from './reducers/userReducer'
+
 const App = () => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(initializeBlogs())
+    dispatch(loggedInUser())
+  }, [dispatch])
+
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
   const [message, setMessage] = useState(null)
   const [isError, setIsError] = useState(false)
 
-  useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )
-  }, [])
+  const user = useSelector((state) => {
+    return state.user
+  })
 
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
-    }
-  }, [])
+  console.log(user)
 
   const blogFormRef = useRef()
 
@@ -70,7 +73,7 @@ const App = () => {
       )
 
       blogService.setToken(user.token)
-      setUser(user)
+      dispatch(setUser(user))
     }
     catch (exception) {
       setMessage('wrong username or password')
@@ -134,7 +137,6 @@ const App = () => {
         </p>
         {blogForm()}
         <Blogs
-          blogs={blogs}
           handleLike={handleLike}
           handleDelete={handleDelete}
           user={user}
