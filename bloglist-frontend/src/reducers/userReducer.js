@@ -12,7 +12,7 @@ const userReducer = (state=null, action) => {
 }
 
 export const loggedInUser = () => {
-  return async dispatch => {
+  return dispatch => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
