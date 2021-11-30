@@ -1,12 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../reducers/userReducer'
 
-const LoginForm = ({
-  handleLogin,
-  username,
-  setUsername,
-  password,
-  setPassword
-}) => {
+const LoginForm = () => {
+  const dispatch = useDispatch()
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
+
+    try {
+      dispatch(setUser(username, password))
+    }
+    catch (exception) {
+      /*
+      setMessage('wrong username or password')
+      setIsError(true)
+      setTimeout(() => {
+        setMessage(null)
+        setIsError(false)
+      }, 5000)
+      */
+    }
+
+    setUsername('')
+    setPassword('')
+  }
+
   return (
     <div>
       <form onSubmit={handleLogin}>
