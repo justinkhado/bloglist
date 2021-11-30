@@ -1,0 +1,28 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvYmVydDEiLCJpZCI6IjYxNzYwMzNmODhkNWQxZWM4MzAxNGUwNCIsImlhdCI6MTYzNTE0MDQ5MiwiZXhwIjoxNjM1MTQ0MDkyfQ.Kl838-uYmGdWvyhndPbHH3GlIYswKaZsXmQ1BdHUhWU
+
+{
+    "title": "structure of backend app 2",
+    "author": "fullstackopen",
+    "url": "https://fullstackopen.com/en/part4/structure_of_backend_application_introduction_to_testing",
+    "likes": 400,
+    "user": "6176033f88d5d1ec83014e04"
+}
+
+###
+GET http://localhost:3003/api/blogs
+
+###
+PUT http://localhost:3003/api/blogs/617603b688d5d1ec83014e1d
+Content-Type: application/json
+
+{
+    "likes": 37
+}
+
+###
+DELETE http://localhost:3003/api/blogs/617643c6b047c882d95eae24
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvYmVydDEiLCJpZCI6IjYxNzYwMzNmODhkNWQxZWM4MzAxNGUwNCIsImlhdCI6MTYzNTE0MDQ5MiwiZXhwIjoxNjM1MTQ0MDkyfQ.Kl838-uYmGdWvyhndPbHH3GlIYswKaZsXmQ1BdHUhWU
+
+###
