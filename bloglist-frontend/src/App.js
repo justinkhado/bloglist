@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import Blogs from './components/Blogs'
@@ -13,19 +13,9 @@ const App = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(initializeBlogs())
     dispatch(loggedInUser())
+    dispatch(initializeBlogs())
   }, [dispatch])
-
-  const [message, setMessage] = useState(null)
-  const [isError, setIsError] = useState(false)
-
-  const test = false
-
-  if (test) {
-    setMessage()
-    setIsError()
-  }
 
   const user = useSelector((state) => {
     return state.user
@@ -34,8 +24,7 @@ const App = () => {
   if (!user) {
     return (
       <div>
-        <Notification message={message} isError={isError} />
-
+        <Notification />
         <h2>log in</h2>
         <LoginForm />
       </div>
@@ -44,8 +33,7 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={message} isError={isError} />
-
+      <Notification />
       <div>
         <h2>blogs</h2>
         <p>

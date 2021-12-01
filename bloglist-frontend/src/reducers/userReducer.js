@@ -31,14 +31,16 @@ export const loggedInUser = () => {
 export const setUser = (username, password) => {
   return async dispatch => {
     const user = await loginService.login({ username, password })
-    window.localStorage.setItem(
-      'loggedBlogAppUser', JSON.stringify(user)
-    )
-    blogService.setToken(user.token)
-    dispatch({
-      type: 'SET_USER',
-      data: user
-    })
+    if (user) {
+      window.localStorage.setItem(
+        'loggedBlogAppUser', JSON.stringify(user)
+      )
+      blogService.setToken(user.token)
+      dispatch({
+        type: 'SET_USER',
+        data: user
+      })
+    }
   }
 }
 

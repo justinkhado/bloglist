@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../reducers/userReducer'
+import { setNotification } from '../reducers/notificationReducer'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
@@ -12,28 +13,23 @@ const LoginForm = () => {
     event.preventDefault()
 
     try {
-      dispatch(setUser(username, password))
+      await dispatch(setUser(username, password))
     }
     catch (exception) {
-      /*
-      setMessage('wrong username or password')
-      setIsError(true)
-      setTimeout(() => {
-        setMessage(null)
-        setIsError(false)
-      }, 5000)
-      */
+      dispatch(setNotification({
+        message: 'wrong username or password',
+        error: true
+      }))
+      setUsername('')
+      setPassword('')
     }
-
-    setUsername('')
-    setPassword('')
   }
 
   return (
     <div>
       <form onSubmit={handleLogin}>
         <div>
-          username
+          {'username '}
           <input
             id='username'
             value={username}
@@ -42,7 +38,7 @@ const LoginForm = () => {
           />
         </div>
         <div>
-          password
+          {'password '}
           <input
             id='password'
             type='password'

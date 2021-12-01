@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Togglable from './Togglable'
 import { createBlog } from '../reducers/blogReducer'
+import { setNotification } from '../reducers/notificationReducer'
 
 const BlogForm = () => {
   const dispatch = useDispatch()
@@ -29,12 +30,10 @@ const BlogForm = () => {
     setTitle('')
     setAuthor('')
     setUrl('')
-    /*
-    setMessage(`a new blog "${blogObject.title}" by ${blogObject.author} added`)
-    setTimeout(() => {
-      setMessage(null)
-    }, 5000)
-    */
+
+    dispatch(setNotification({
+      message: `a new blog "${blog.title}" by ${blog.author} added`
+    }))
   }
 
   return (
