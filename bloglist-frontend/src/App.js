@@ -6,6 +6,7 @@ import {
   useMatch
 } from 'react-router-dom'
 
+import Menu from './components/Menu'
 import Blog from './components/Blog'
 import Blogs from './components/Blogs'
 import BlogForm from './components/BlogForm'
@@ -15,7 +16,7 @@ import User from './components/User'
 import Users from './components/Users'
 
 import { initializeBlogs } from './reducers/blogReducer'
-import { loggedInUser, logOut } from './reducers/userReducer'
+import { loggedInUser } from './reducers/userReducer'
 import { initializeUsers } from './reducers/usersReducer'
 
 const App = () => {
@@ -53,13 +54,10 @@ const App = () => {
 
   return (
     <div>
+      <Menu />
       <Notification />
       <div>
         <h2>blogs</h2>
-        <p>
-          {`${currentUser.name} logged in `}
-          <button onClick={() => dispatch(logOut())}>log out</button>
-        </p>
         <Routes>
           <Route path='/' element={<div><BlogForm /> <Blogs /></div>} />
           <Route path='/blogs/:id' element={<Blog blog={blog} />} />
