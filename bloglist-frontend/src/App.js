@@ -6,9 +6,10 @@ import {
   useMatch
 } from 'react-router-dom'
 
+import Blog from './components/Blog'
 import Blogs from './components/Blogs'
-import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
+import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import User from './components/User'
 import Users from './components/Users'
@@ -28,13 +29,17 @@ const App = () => {
 
   const currentUser = useSelector(state => state.user)
   const users = useSelector(state => state.users)
+  const blogs = useSelector(state => state.blogs)
 
-  const match = useMatch('/users/:id')
-  const user = match
-    ? users.find(u => u.id === match.params.id)
+  const userMatch = useMatch('/users/:id')
+  const user = userMatch
+    ? users.find(u => u.id === userMatch.params.id)
     : null
 
-  console.log(users)
+  const blogMatch = useMatch('/blogs/:id')
+  const blog = blogMatch
+    ? blogs.find(b => b.id === blogMatch.params.id)
+    : null
 
   if (!currentUser) {
     return (
@@ -57,6 +62,7 @@ const App = () => {
         </p>
         <Routes>
           <Route path='/' element={<div><BlogForm /> <Blogs /></div>} />
+          <Route path='/blogs/:id' element={<Blog blog={blog} />} />
           <Route path='/users' element={<Users />} />
           <Route path='/users/:id' element={<User user={user} />} />
         </Routes>

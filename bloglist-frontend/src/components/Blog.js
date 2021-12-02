@@ -1,32 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { like, remove } from '../reducers/blogReducer'
 
 const Blog = ({ blog }) => {
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
-  }
-
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
-
-  const [visible, setVisible] = useState(false)
-  const [viewText, setViewText] = useState('view')
-
-  const toggleDetails = () => {
-    setVisible(!visible)
-
-    if (visible) {
-      setViewText('view')
-    }
-    else {
-      setViewText('hide')
-    }
-  }
 
   const handleLike = () => {
     const updatedBlog = { ...blog, likes: blog.likes + 1 }
@@ -39,8 +17,33 @@ const Blog = ({ blog }) => {
     }
   }
 
+  if (!blog) {
+    return null
+  }
+
   return (
-    <div style={blogStyle} className='blog'>
+    <div>
+      <div>
+        <h2 style={{ marginBottom: 0 }}>
+          {`${blog.title} `}
+          {user.username === blog.user.username &&
+            <button onClick={() => handleDelete(blog)}>delete</button>
+          }
+        </h2>
+        <i>{`by ${blog.author}`}</i>
+      </div> <br />
+      <a href={blog.url}>{blog.url}</a> <br />
+      <div>
+        {`${blog.likes} likes `}
+        <button id='like-button' onClick={() => handleLike(blog.id)}>like</button>
+      </div>
+      uploaded by {blog.user.name}
+    </div>
+  )
+
+  /*
+  return (
+    <div className='blog'>
       <i>{blog.title} </i>
       <span>{blog.author}</span> <br />
       <button onClick={toggleDetails}>{viewText}</button>
@@ -55,9 +58,9 @@ const Blog = ({ blog }) => {
           }
         </div>
       }
-
     </div>
   )
+  */
 }
 
 export default Blog
