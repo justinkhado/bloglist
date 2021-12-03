@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { like, remove, addComment } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import { logOut } from '../reducers/userReducer'
 
 const Blog = ({ blog }) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const user = useSelector(state => state.user)
   const [comment, setComment] = useState('')
 
@@ -19,6 +21,7 @@ const Blog = ({ blog }) => {
     if (window.confirm(`Remove blog "${blog.title}" by ${blog.author}`)) {
       try {
         await dispatch(remove(blog))
+        navigate('/')
       } catch (error) {
         dispatch(setNotification({
           message: 'Token expired - log in again',

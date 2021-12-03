@@ -1,9 +1,15 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import Togglable from './Togglable'
 import { createBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import { logOut } from '../reducers/userReducer'
+
+import {
+  Container,
+  Button,
+  TextField,
+  Typography
+} from '@mui/material'
 
 const BlogForm = () => {
   const dispatch = useDispatch()
@@ -13,12 +19,8 @@ const BlogForm = () => {
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
-  const blogFormRef = useRef()
-
-  const addBlog = async (event) => {
+  const handleCreateBlog = async (event) => {
     event.preventDefault()
-
-    blogFormRef.current.toggleVisibility()
 
     const blog = {
       title: title,
@@ -45,40 +47,60 @@ const BlogForm = () => {
   }
 
   return (
-    <Togglable buttonLabel='create new blog' ref={blogFormRef}>
-      <div>
-        <h2>create new</h2>
-        <form onSubmit={addBlog}>
-          <div>
-            title:
-            <input
-              id='title-input'
-              value={title}
-              onChange={event => setTitle(event.target.value)}
-            />
-          </div>
-          <div>
-            author:
-            <input
-              id='author-input'
-              value={author}
-              onChange={event => setAuthor(event.target.value)}
-            />
-          </div>
-          <div>
-            url:
-            <input
-              id='url-input'
-              value={url}
-              onChange={event => setUrl(event.target.value)}
-            />
-          </div>
-          <button id='submit-blog-form' type='submit'>
-            create
-          </button>
-        </form>
-      </div>
-    </Togglable>
+    <Container
+      sx={{
+        mt: 5,
+        ml: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch'
+      }}
+      maxWidth='md'
+    >
+      <Typography variant='h4'>share new blog</Typography>
+      <form onSubmit={handleCreateBlog}>
+        <div>
+          <TextField
+            id='title-input'
+            label='title'
+            value={title}
+            onChange={event => setTitle(event.target.value)}
+            margin='dense'
+            fullWidth
+            required
+          />
+        </div>
+        <div>
+          <TextField
+            id='url-input'
+            label='url'
+            value={url}
+            onChange={event => setUrl(event.target.value)}
+            margin='dense'
+            fullWidth
+            required
+          />
+        </div>
+        <div>
+          <TextField
+            id='author-input'
+            label='author'
+            value={author}
+            onChange={event => setAuthor(event.target.value)}
+            margin='dense'
+            required
+          />
+        </div>
+        <Button
+          sx={{ mt: 2 }}
+          id='submit-blog-form'
+          type='submit'
+          variant='contained'
+        >
+          create
+        </Button>
+      </form>
+    </Container>
   )
 }
 

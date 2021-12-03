@@ -6,11 +6,12 @@ import {
   useMatch
 } from 'react-router-dom'
 
-import Menu from './components/Menu'
 import Blog from './components/Blog'
 import Blogs from './components/Blogs'
 import BlogForm from './components/BlogForm'
+import Header from './components/Header'
 import LoginForm from './components/LoginForm'
+import Menu from './components/Menu'
 import Notification from './components/Notification'
 import User from './components/User'
 import Users from './components/Users'
@@ -18,6 +19,8 @@ import Users from './components/Users'
 import { initializeBlogs } from './reducers/blogReducer'
 import { loggedInUser } from './reducers/userReducer'
 import { initializeUsers } from './reducers/usersReducer'
+
+import { Container } from '@mui/material'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -44,28 +47,27 @@ const App = () => {
 
   if (!currentUser) {
     return (
-      <div>
+      <Container>
+        <Header />
         <Notification />
-        <h2>log in</h2>
         <LoginForm />
-      </div>
+      </Container>
     )
   }
 
   return (
-    <div>
+    <Container maxWidth='xl'>
+      <Header />
       <Menu />
       <Notification />
-      <div>
-        <h2>blogs</h2>
-        <Routes>
-          <Route path='/' element={<div><BlogForm /> <Blogs /></div>} />
-          <Route path='/blogs/:id' element={<Blog blog={blog} />} />
-          <Route path='/users' element={<Users />} />
-          <Route path='/users/:id' element={<User user={user} />} />
-        </Routes>
-      </div>
-    </div>
+      <Routes>
+        <Route path='/' element={<div><Blogs /></div>} />
+        <Route path='/blogs/:id' element={<Blog blog={blog} />} />
+        <Route path='/blogs/submit' element={<BlogForm />} />
+        <Route path='/users' element={<Users />} />
+        <Route path='/users/:id' element={<User user={user} />} />
+      </Routes>
+    </Container>
   )
 }
 

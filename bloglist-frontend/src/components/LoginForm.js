@@ -3,6 +3,14 @@ import { useDispatch } from 'react-redux'
 import { setUser } from '../reducers/userReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
+import {
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography
+} from '@mui/material'
+
 const LoginForm = () => {
   const dispatch = useDispatch()
 
@@ -26,30 +34,46 @@ const LoginForm = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleLogin}>
-        <div>
-          {'username '}
-          <input
-            id='username'
-            value={username}
-            name='Username'
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          {'password '}
-          <input
-            id='password'
-            type='password'
-            value={password}
-            name='Password'
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button id='login-button' type='submit'>login</button>
-      </form>
-    </div>
+    <Container maxWidth='xs'>
+      <Box
+        sx={{
+          mt: 2,
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+        component='form'
+        onSubmit={handleLogin}
+      >
+        <Typography sx={{ alignSelf: 'center' }} variant='h4'>
+          log in
+        </Typography>
+        <TextField
+          label='username'
+          value={username}
+          onChange={({ target }) => setUsername(target.value)}
+          margin='dense'
+          required
+          autoFocus
+        />
+        <TextField
+          label='password'
+          type='password'
+          value={password}
+          onChange={({ target }) => setPassword(target.value)}
+          margin='dense'
+          required
+        />
+        <Button
+          sx={{ mt: 2 }}
+          variant='contained'
+          id='login-button'
+          type='submit'
+          fullWidth
+        >
+          login
+        </Button>
+      </Box>
+    </Container>
   )
 }
 
