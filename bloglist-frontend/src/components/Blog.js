@@ -5,6 +5,11 @@ import { like, remove, addComment } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import { logOut } from '../reducers/userReducer'
 
+import {
+  Card,
+  CardContent
+} from '@mui/material'
+
 const Blog = ({ blog }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -50,34 +55,40 @@ const Blog = ({ blog }) => {
   }
 
   return (
-    <div>
-      <div>
-        <h2 style={{ marginBottom: 0 }}>
-          {`${blog.title} `}
-          {user.username === blog.user.username &&
-            <button onClick={() => handleDelete(blog)}>delete</button>
-          }
-        </h2>
-        <i>{`by ${blog.author}`}</i>
-      </div> <br />
-      <a href={blog.url}>{blog.url}</a> <br />
-      <div>
-        {`${blog.likes} likes `}
-        <button id='like-button' onClick={() => handleLike(blog.id)}>like</button>
-      </div>
-      uploaded by {blog.user.name}
-      <div>
-        <h3 style={{ marginBottom: 5 }}>comments</h3>
-        <input
-          value={comment}
-          onChange={(event) => setComment(event.target.value)}
-        />
-        <button onClick={handleComment}>submit</button>
-        {blog.comments.map((comment, index) =>
-          <li key={index}>{comment}</li>
-        )}
-      </div>
-    </div>
+    <Card
+      sx={{ margin: 2 }}
+      variant='elevation'
+      elevation={5}
+    >
+      <CardContent>
+        <div>
+          <h2 style={{ marginBottom: 0 }}>
+            {`${blog.title} `}
+            {user.username === blog.user.username &&
+              <button onClick={() => handleDelete(blog)}>delete</button>
+            }
+          </h2>
+          <i>{`by ${blog.author}`}</i>
+        </div> <br />
+        <a href={blog.url}>{blog.url}</a> <br />
+        <div>
+          {`${blog.likes} likes `}
+          <button id='like-button' onClick={() => handleLike(blog.id)}>like</button>
+        </div>
+        uploaded by {blog.user.name}
+        <div>
+          <h3 style={{ marginBottom: 5 }}>comments</h3>
+          <input
+            value={comment}
+            onChange={(event) => setComment(event.target.value)}
+          />
+          <button onClick={handleComment}>submit</button>
+          {blog.comments.map((comment, index) =>
+            <li key={index}>{comment}</li>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   )
 }
 

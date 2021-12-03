@@ -32,7 +32,6 @@ const Blogs = () => {
             <CardContent
               sx={{
                 display: 'flex',
-                flexWrap: 'wrap',
                 alignItems: 'center'
               }}
             >
@@ -51,15 +50,26 @@ const Blogs = () => {
               <div
                 style={{
                   display: 'flex',
-                  flexDirection: 'column'
+                  flexDirection: 'column',
+                  flexGrow: 100
                 }}
               >
                 <Typography variant='h6'>
                   {blog.title}
                 </Typography>
-                <Typography variant='body2' color='text.secondary'>
-                  {blog.author}
-                </Typography>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography variant='body2' color='text.secondary'>
+                    {blog.comments.length} comment(s)
+                  </Typography>
+                  <Typography variant='body2' color='text.secondary'>
+                    submitted by {blog.user.username}
+                  </Typography>
+                </div>
               </div>
             </CardContent>
           </CardActionArea>

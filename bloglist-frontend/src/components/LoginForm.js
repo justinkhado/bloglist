@@ -6,6 +6,8 @@ import { setNotification } from '../reducers/notificationReducer'
 import {
   Box,
   Button,
+  Card,
+  CardContent,
   Container,
   TextField,
   Typography
@@ -35,44 +37,52 @@ const LoginForm = () => {
 
   return (
     <Container maxWidth='xs'>
-      <Box
-        sx={{
-          mt: 2,
-          display: 'flex',
-          flexDirection: 'column'
-        }}
-        component='form'
-        onSubmit={handleLogin}
+      <Card
+        sx={{ mt: 10 }}
+        variant='elevation'
+        elevation={5}
       >
-        <Typography sx={{ alignSelf: 'center' }} variant='h4'>
-          log in
-        </Typography>
-        <TextField
-          label='username'
-          value={username}
-          onChange={({ target }) => setUsername(target.value)}
-          margin='dense'
-          required
-          autoFocus
-        />
-        <TextField
-          label='password'
-          type='password'
-          value={password}
-          onChange={({ target }) => setPassword(target.value)}
-          margin='dense'
-          required
-        />
-        <Button
-          sx={{ mt: 2 }}
-          variant='contained'
-          id='login-button'
-          type='submit'
-          fullWidth
-        >
-          login
-        </Button>
-      </Box>
+        <CardContent>
+          <Box
+            sx={{
+              mt: 2,
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+            component='form'
+            onSubmit={handleLogin}
+          >
+            <Typography sx={{ alignSelf: 'center' }} variant='h4'>
+              log in
+            </Typography>
+            <TextField
+              label='username'
+              value={username}
+              onChange={({ target }) => setUsername(target.value)}
+              margin='dense'
+              required
+              autoFocus
+            />
+            <TextField
+              label='password'
+              type='password'
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
+              margin='dense'
+              required
+            />
+            <Button
+              sx={{ mt: 2 }}
+              variant='contained'
+              id='login-button'
+              type='submit'
+              fullWidth
+            >
+              login
+            </Button>
+          </Box>
+        </CardContent>
+      </Card>
     </Container>
   )
 }

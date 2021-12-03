@@ -11,14 +11,14 @@ const Notification = () => {
 
   if (notification.error) {
     return (
-      <Alert variant='outlined' severity='error'>
+      <Alert sx={{ mt: 1 }} severity='error'>
         {notification.message}
       </Alert>
     )
   }
 
   return (
-    <Alert variant='outlined'>
+    <Alert sx={{ mt: 1 }}>
       {notification.message}
     </Alert>
   )

@@ -27,6 +27,7 @@ const NavBar = () => {
         sx={{
           display: 'flex'
         }}
+        variant='dense'
       >
         <Button color='inherit' component={Link} to='/'>
           blogs
@@ -51,10 +52,19 @@ const NavBar = () => {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose}>
+          <MenuItem
+            component={Link}
+            to={`/users/${currentUser.id}`}
+            onClick={handleClose}
+          >
             my blogs
           </MenuItem>
-          <MenuItem color='inherit' onClick={() => dispatch(logOut())}>
+          <MenuItem
+            color='inherit'
+            onClick={() => dispatch(logOut())}
+            component={Link}
+            to='/'
+          >
             log out
           </MenuItem>
         </Menu>
