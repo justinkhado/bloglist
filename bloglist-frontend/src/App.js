@@ -11,7 +11,7 @@ import Blogs from './components/Blogs'
 import BlogForm from './components/BlogForm'
 import Header from './components/Header'
 import LoginForm from './components/LoginForm'
-import Menu from './components/Menu'
+import NavBar from './components/NavBar'
 import Notification from './components/Notification'
 import User from './components/User'
 import Users from './components/Users'
@@ -58,7 +58,7 @@ const App = () => {
   return (
     <Container maxWidth='xl'>
       <Header />
-      <Menu />
+      <NavBar />
       <Notification />
       <Routes>
         <Route path='/' element={<div><Blogs /></div>} />
