@@ -43,7 +43,7 @@ const NavBar = () => {
           aria-controls='user-menu'
           onClick={handleClick}
         >
-          {currentUser.name}
+          {currentUser.username}
         </Button>
         <Menu
           id='user-menu'
