@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom'
 
 const Blogs = () => {
   const blogLinkStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 5,
     border: 'solid',
     borderWidth: 1,
-    marginBottom: 5
+    marginTop: 20
   }
 
   const blogs = useSelector((state) => {

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Togglable from './Togglable'
 import { createBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
+import { logOut } from '../reducers/userReducer'
 
 const BlogForm = () => {
   const dispatch = useDispatch()
@@ -14,7 +15,7 @@ const BlogForm = () => {
 
   const blogFormRef = useRef()
 
-  const addBlog = (event) => {
+  const addBlog = async (event) => {
     event.preventDefault()
 
     blogFormRef.current.toggleVisibility()
@@ -25,15 +26,22 @@ const BlogForm = () => {
       url: url
     }
 
-    dispatch(createBlog(blog, user))
+    try {
+      await dispatch(createBlog(blog, user))
+      setTitle('')
+      setAuthor('')
+      setUrl('')
 
-    setTitle('')
-    setAuthor('')
-    setUrl('')
-
-    dispatch(setNotification({
-      message: `a new blog "${blog.title}" by ${blog.author} added`
-    }))
+      dispatch(setNotification({
+        message: `a new blog "${blog.title}" by ${blog.author} added`
+      }))
+    } catch (error) {
+      dispatch(setNotification({
+        message: 'Token expired - log in again',
+        error: true
+      }))
+      dispatch(logOut())
+    }
   }
 
   return (
@@ -65,7 +73,9 @@ const BlogForm = () => {
               onChange={event => setUrl(event.target.value)}
             />
           </div>
-          <button id='submit-blog-form' type='submit'>create</button>
+          <button id='submit-blog-form' type='submit'>
+            create
+          </button>
         </form>
       </div>
     </Togglable>

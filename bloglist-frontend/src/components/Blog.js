@@ -1,19 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { like, remove } from '../reducers/blogReducer'
+import { like, remove, addComment } from '../reducers/blogReducer'
+import { setNotification } from '../reducers/notificationReducer'
+import { logOut } from '../reducers/userReducer'
 
 const Blog = ({ blog }) => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
+  const [comment, setComment] = useState('')
+
 
   const handleLike = () => {
     const updatedBlog = { ...blog, likes: blog.likes + 1 }
     dispatch(like(updatedBlog))
   }
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (window.confirm(`Remove blog "${blog.title}" by ${blog.author}`)) {
-      dispatch(remove(blog))
+      try {
+        await dispatch(remove(blog))
+      } catch (error) {
+        dispatch(setNotification({
+          message: 'Token expired - log in again',
+          error: true
+        }))
+        dispatch(logOut())
+      }
+    }
+  }
+
+  const handleComment = async () => {
+    try {
+      await dispatch(addComment(blog.id, comment))
+      setComment('')
+    } catch (error) {
+      dispatch(setNotification({
+        message: 'Token expired - log in again',
+        error: true
+      }))
+      dispatch(logOut())
     }
   }
 
@@ -38,29 +63,19 @@ const Blog = ({ blog }) => {
         <button id='like-button' onClick={() => handleLike(blog.id)}>like</button>
       </div>
       uploaded by {blog.user.name}
+      <div>
+        <h3 style={{ marginBottom: 5 }}>comments</h3>
+        <input
+          value={comment}
+          onChange={(event) => setComment(event.target.value)}
+        />
+        <button onClick={handleComment}>submit</button>
+        {blog.comments.map((comment, index) =>
+          <li key={index}>{comment}</li>
+        )}
+      </div>
     </div>
   )
-
-  /*
-  return (
-    <div className='blog'>
-      <i>{blog.title} </i>
-      <span>{blog.author}</span> <br />
-      <button onClick={toggleDetails}>{viewText}</button>
-      {visible &&
-        <div>
-          <span>{blog.url}</span> <br />
-          <span>{`likes: ${blog.likes} `}</span>
-          <button id='like-button' onClick={() => handleLike(blog.id)}>like</button>  <br />
-          {blog.user.name} <br />
-          {user.username === blog.user.username &&
-            <button onClick={() => handleDelete(blog)}>remove</button>
-          }
-        </div>
-      }
-    </div>
-  )
-  */
 }
 
 export default Blog

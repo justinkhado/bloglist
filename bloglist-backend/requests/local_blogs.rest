@@ -14,7 +14,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvY
 GET http://localhost:3003/api/blogs
 
 ###
-PUT http://localhost:3003/api/blogs/617603b688d5d1ec83014e1d
+PUT http://localhost:3003/api/blogs/61a8ba2de12426d1971fa93f
 Content-Type: application/json
 
 {
@@ -26,3 +26,10 @@ DELETE http://localhost:3003/api/blogs/617643c6b047c882d95eae24
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvYmVydDEiLCJpZCI6IjYxNzYwMzNmODhkNWQxZWM4MzAxNGUwNCIsImlhdCI6MTYzNTE0MDQ5MiwiZXhwIjoxNjM1MTQ0MDkyfQ.Kl838-uYmGdWvyhndPbHH3GlIYswKaZsXmQ1BdHUhWU
 
 ###
+POST http://localhost:3003/api/blogs/61a8ba2de12426d1971fa93f/comments
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvYmVydDEiLCJpZCI6IjYxNzYwMzNmODhkNWQxZWM4MzAxNGUwNCIsImlhdCI6MTYzODQ0NzkxMiwiZXhwIjoxNjM4NDUxNTEyfQ.s7Ro1A3U9CiEh4jEaTd2Md-tUUYL3loLHnyax6eXEqY
+
+{
+    "comment": "cool blog"
+}
