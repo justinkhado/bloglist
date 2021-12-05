@@ -1,9 +1,13 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import {
   Card,
   CardContent,
   Table,
-  TableContainer,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   Typography
 } from '@mui/material'
 
@@ -12,19 +16,50 @@ const UserBlogs = ({ user }) => {
     return null
   }
 
+  const sortedBlogs = user.blogs.sort((a, b) => b.likes - a.likes)
+
   return (
-    <Card
-      sx={{
-        margin: 2
-      }}
-    >
-      <CardContent>
-        <Typography variant='h5'>
+    <Card sx={{ margin: 2 }}>
+      <CardContent
+        sx={{
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        <Typography
+          sx={{ alignSelf: 'center' }}
+          variant='h4'
+        >
           {user.username}
         </Typography>
-        <TableContainer>
-          <Table></Table>
-        </TableContainer>
+
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <Typography>blogs</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>likes</Typography>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {sortedBlogs.map((blog, index) =>
+              <TableRow key={index}>
+                <TableCell>
+                  <Typography component={Link} to={`/blogs/${blog.id}`}>
+                    {blog.title}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography>{blog.likes}</Typography>
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+
       </CardContent>
     </Card>
   )
