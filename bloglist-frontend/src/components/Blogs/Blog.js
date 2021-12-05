@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import BlogComments from './BlogComments'
 import LikeCount from './LikeCount'
-import { remove, addComment } from '../reducers/blogReducer'
-import { setNotification } from '../reducers/notificationReducer'
-import { logOut } from '../reducers/userReducer'
-
+import { remove } from '../../reducers/blogReducer'
+import { setNotification } from '../../reducers/notificationReducer'
+import { logOut } from '../../reducers/userReducer'
 import {
   Button,
   Card,
@@ -19,13 +19,15 @@ const Blog = ({ blog }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(state => state.user)
-  const [comment, setComment] = useState('')
 
   const handleDelete = async () => {
     if (window.confirm(`Remove blog "${blog.title}" by ${blog.author}`)) {
       try {
         await dispatch(remove(blog))
         navigate('/')
+        dispatch(setNotification({
+          message: 'blog successfully deleted'
+        }))
       } catch (error) {
         dispatch(setNotification({
           message: 'Token expired - log in again',
@@ -33,19 +35,6 @@ const Blog = ({ blog }) => {
         }))
         dispatch(logOut())
       }
-    }
-  }
-
-  const handleComment = async () => {
-    try {
-      await dispatch(addComment(blog.id, comment))
-      setComment('')
-    } catch (error) {
-      dispatch(setNotification({
-        message: 'Token expired - log in again',
-        error: true
-      }))
-      dispatch(logOut())
     }
   }
 
@@ -90,7 +79,11 @@ const Blog = ({ blog }) => {
           >
             <Typography variant='body2' color='text.secondary'>
               {'submitted by '}
-              <MuiLink component={Link} to={`/users/${blog.user.id}`}>
+              <MuiLink
+                sx={{ textDecoration: 'none' }}
+                component={Link}
+                to={`/users/${blog.user.id}`}
+              >
                 {blog.user.username}
               </MuiLink>
             </Typography>
@@ -107,23 +100,7 @@ const Blog = ({ blog }) => {
           </div>
         </CardContent>
       </Card>
-      <Card
-        sx={{ margin: 2 }}
-        variant='elevation'
-        elevation={5}
-      >
-        <CardContent>
-          <h3 style={{ marginBottom: 5 }}>comments</h3>
-          <input
-            value={comment}
-            onChange={(event) => setComment(event.target.value)}
-          />
-          <button onClick={handleComment}>submit</button>
-          {blog.comments.map((comment, index) =>
-            <li key={index}>{comment}</li>
-          )}
-        </CardContent>
-      </Card>
+      <BlogComments blog={blog} />
     </div>
   )
 }

@@ -21,6 +21,7 @@ const Header = () => {
           padding: 1
         }}
         variant='h2'
+        color='white'
       >
         bloglist
       </Typography>

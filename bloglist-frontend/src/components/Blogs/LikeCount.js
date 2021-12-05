@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { like } from '../reducers/blogReducer'
+import { like } from '../../reducers/blogReducer'
 import {
   IconButton,
   Typography

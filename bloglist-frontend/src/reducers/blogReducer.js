@@ -73,7 +73,7 @@ export const remove = (blog) => {
 
 export const addComment = (id, comment) => {
   return async dispatch => {
-    await blogService.comment(id, comment)
+    await blogService.comment(id, { comment })
     dispatch({
       type: 'COMMENT',
       data: { id, comment }

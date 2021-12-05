@@ -6,9 +6,9 @@ import {
   useMatch
 } from 'react-router-dom'
 
-import Blog from './components/Blog'
-import BlogForm from './components/BlogForm'
-import Blogs from './components/Blogs'
+import Blog from './components/Blogs/Blog'
+import BlogForm from './components/Blogs/BlogForm'
+import Blogs from './components/Blogs/Blogs'
 import Header from './components/Header'
 import LoginForm from './components/LoginForm'
 import NavBar from './components/NavBar'
