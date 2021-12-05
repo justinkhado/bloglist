@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { addComment } from '../../reducers/blogReducer'
 import { setNotification } from '../../reducers/notificationReducer'
 import { logOut } from '../../reducers/userReducer'
@@ -7,6 +8,7 @@ import {
   Button,
   Card,
   CardContent,
+  Link as MuiLink,
   Stack,
   TextField,
   Typography
@@ -14,11 +16,31 @@ import {
 
 const BlogComments = ({ blog }) => {
   const dispatch = useDispatch()
+  const currentUser = useSelector(state => state.user)
   const [comment, setComment] = useState('')
 
   const handleComment = async () => {
+    // check if comment null, empty, or white-space only
+    if (
+      comment === null ||
+      comment.match(/^ *$/) !== null ||
+      (comment.indexOf('\n') !== -1 && comment.length === 1)
+    ) {
+      dispatch(setNotification({
+        message: 'comment can\'t be empty',
+        error: true
+      }))
+      setComment('')
+      return
+    }
+
     try {
-      await dispatch(addComment(blog.id, comment))
+      const commentObject = {
+        comment,
+        username: currentUser.username,
+        userId: currentUser.id
+      }
+      await dispatch(addComment(blog.id, commentObject))
       setComment('')
     } catch (error) {
       dispatch(setNotification({
@@ -59,17 +81,28 @@ const BlogComments = ({ blog }) => {
           mt={3}
           spacing={1}
         >
-          {blog.comments.map((comment, index) =>
+          {blog.comments.map((commentObject, index) =>
             <Card
-              sx={{ border: 1 }}
+              sx={{
+                border: 1,
+                padding: 1
+              }}
               variant='outlined'
               key={index}
               square
             >
-              <Typography
-                sx={{ padding: 1 }}
-              >
-                {comment}
+              <Typography>
+                {commentObject.comment}
+              </Typography>
+              <Typography variant='body2' color='text.secondary'>
+                {'- '}
+                <MuiLink
+                  sx={{ textDecoration: 'none' }}
+                  component={Link}
+                  to={`/users/${blog.user.id}`}
+                >
+                  {blog.user.username}
+                </MuiLink>
               </Typography>
             </Card>
           )}

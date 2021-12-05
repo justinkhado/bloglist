@@ -20,7 +20,6 @@ const BlogForm = () => {
   const user = useSelector(state => state.user)
 
   const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
   const handleCreateBlog = async (event) => {
@@ -28,14 +27,12 @@ const BlogForm = () => {
 
     const blog = {
       title: title,
-      author: author,
       url: url
     }
 
     try {
       await dispatch(createBlog(blog, user))
       setTitle('')
-      setAuthor('')
       setUrl('')
 
       dispatch(setNotification({
@@ -92,17 +89,6 @@ const BlogForm = () => {
                 margin='dense'
                 size='small'
                 fullWidth
-                required
-              />
-            </div>
-            <div>
-              <TextField
-                id='author-input'
-                label='author'
-                value={author}
-                onChange={event => setAuthor(event.target.value)}
-                margin='dense'
-                size='small'
                 required
               />
             </div>

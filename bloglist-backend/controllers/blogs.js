@@ -32,9 +32,8 @@ blogsRouter.post('/', async (request, response) => {
   const blog = new Blog({
     url: body.url,
     title: body.title,
-    author: body.author,
-    user: user.id,    
-    likes: body.likes || 0
+    user: user.id,
+    likes: 0
   })
 
   const savedBlog = await blog.save()
@@ -78,7 +77,7 @@ blogsRouter.post('/:id/comments', async (request, response) => {
 
   const blogToUpdate = await Blog.findById(request.params.id)
 
-  blogToUpdate.comments = blogToUpdate.comments.concat(body.comment)
+  blogToUpdate.comments = blogToUpdate.comments.concat(body)
   blogToUpdate.save()
 
   response.json(blogToUpdate)  

@@ -11,7 +11,7 @@ const notificationReducer = (state=null, action) => {
 
 let timeoutId
 
-export const setNotification = (notification, time=5000) => {
+export const setNotification = (notification, time=3000) => {
   return async dispatch => {
     if (timeoutId) {
       clearTimeout(timeoutId)
