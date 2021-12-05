@@ -20,8 +20,9 @@ const NavBar = () => {
 
   return (
     <AppBar
-      sx={{ background: 'grey' }}
+      sx={{ background: 'dimgrey' }}
       position='static'
+      elevation={0}
     >
       <Toolbar
         sx={{

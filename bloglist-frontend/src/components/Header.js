@@ -1,19 +1,30 @@
 import React from 'react'
-import { Typography } from '@mui/material'
+import {
+  Card,
+
+  Typography
+} from '@mui/material'
 
 const Header = () => {
   return (
-    <Typography
+    <Card
       sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        background: 'lavender',
-        padding: 1
+        background: 'mediumpurple',
       }}
-      variant='h3'
+      square
     >
-      bloglist
-    </Typography>
+
+      <Typography
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          padding: 1
+        }}
+        variant='h2'
+      >
+        bloglist
+      </Typography>
+    </Card>
   )
 }
 

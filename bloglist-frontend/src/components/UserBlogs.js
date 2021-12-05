@@ -1,6 +1,6 @@
 import React from 'react'
 
-const User = ({ user }) => {
+const UserBlogs = ({ user }) => {
   if (!user) {
     return null
   }
@@ -18,4 +18,4 @@ const User = ({ user }) => {
   )
 }
 
-export default User
+export default UserBlogs

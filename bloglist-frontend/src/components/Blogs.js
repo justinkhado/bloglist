@@ -1,13 +1,14 @@
 import React from 'react'
+import LikeCount from './LikeCount'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {
   Card,
   CardActionArea,
+  CardActions,
   CardContent,
   Typography
 } from '@mui/material'
-import FavoriteBorderIcon from '@mui/icons-material/Favorite'
 
 const Blogs = () => {
   const blogs = useSelector((state) => {
@@ -20,59 +21,48 @@ const Blogs = () => {
     <div>
       {sortedBlogs.map(blog =>
         <Card
-          sx={{ margin: 2 }}
-          variant='elevation'
+          sx={{
+            display: 'flex',
+            margin: 2
+          }}
           elevation={5}
           key={blog.id}
         >
-          <CardActionArea
-            component={Link}
+          <CardActions>
+            <LikeCount blog={blog} />
+          </CardActions>
+          <Link
+            style={{
+              textDecoration: 'none', flexGrow: 1
+            }}
+            component={CardActionArea}
             to={`/blogs/${blog.id}`}
           >
             <CardContent
               sx={{
                 display: 'flex',
-                alignItems: 'center'
+                flexDirection: 'column',
+                paddingLeft: 0
               }}
             >
+              <Typography variant='h6'>
+                {blog.title}
+              </Typography>
               <div
                 style={{
                   display: 'flex',
-                  flexDirection: 'column',
-                  marginRight: 16
+                  justifyContent: 'space-between'
                 }}
               >
-                <Typography sx={{ alignSelf: 'center' }} variant='body2'>
-                  {blog.likes}
+                <Typography variant='body2' color='text.secondary'>
+                  {blog.comments.length} comment(s)
                 </Typography>
-                <FavoriteBorderIcon />
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  flexGrow: 100
-                }}
-              >
-                <Typography variant='h6'>
-                  {blog.title}
+                <Typography variant='body2' color='text.secondary'>
+                  submitted by {blog.user.username}
                 </Typography>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Typography variant='body2' color='text.secondary'>
-                    {blog.comments.length} comment(s)
-                  </Typography>
-                  <Typography variant='body2' color='text.secondary'>
-                    submitted by {blog.user.username}
-                  </Typography>
-                </div>
               </div>
             </CardContent>
-          </CardActionArea>
+          </Link>
         </Card>
       )}
     </div>

@@ -7,13 +7,13 @@ import {
 } from 'react-router-dom'
 
 import Blog from './components/Blog'
-import Blogs from './components/Blogs'
 import BlogForm from './components/BlogForm'
+import Blogs from './components/Blogs'
 import Header from './components/Header'
 import LoginForm from './components/LoginForm'
 import NavBar from './components/NavBar'
 import Notification from './components/Notification'
-import User from './components/User'
+import UserBlogs from './components/UserBlogs'
 import Users from './components/Users'
 
 import { initializeBlogs } from './reducers/blogReducer'
@@ -65,7 +65,7 @@ const App = () => {
         <Route path='/blogs/:id' element={<Blog blog={blog} />} />
         <Route path='/blogs/submit' element={<BlogForm />} />
         <Route path='/users' element={<Users />} />
-        <Route path='/users/:id' element={<User user={user} />} />
+        <Route path='/users/:id' element={<UserBlogs user={user} />} />
       </Routes>
     </Container>
   )
