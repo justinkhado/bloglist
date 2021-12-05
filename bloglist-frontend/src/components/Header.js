@@ -9,11 +9,10 @@ const Header = () => {
   return (
     <Card
       sx={{
-        background: 'mediumpurple',
+        background: 'mediumpurple'
       }}
       square
     >
-
       <Typography
         sx={{
           display: 'flex',

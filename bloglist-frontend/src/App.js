@@ -13,7 +13,7 @@ import Header from './components/Header'
 import LoginForm from './components/LoginForm'
 import NavBar from './components/NavBar'
 import Notification from './components/Notification'
-import UserBlogs from './components/UserBlogs'
+import UserBlogs from './components/User/UserBlogs'
 import Users from './components/Users'
 
 import { initializeBlogs } from './reducers/blogReducer'
