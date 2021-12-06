@@ -65,11 +65,20 @@ const Blog = ({ blog }) => {
           <Typography variant='h6'>
             {blog.title}
           </Typography>
-          <MuiLink href={blog.url}>
-            <Typography sx={{ overflowWrap: 'anywhere' }}>
-              {blog.url}
-            </Typography>
-          </MuiLink>
+          {blog.type === 'link' ?
+            <MuiLink
+              href={
+                blog.url.indexOf('http') !== -1 ?
+                  blog.url :
+                  `//${blog.url}`
+              }
+            >
+              <Typography sx={{ overflowWrap: 'anywhere' }}>
+                {blog.url}
+              </Typography>
+            </MuiLink> :
+            <Typography>{blog.text}</Typography>
+          }
           <div
             style={{
               display: 'flex',

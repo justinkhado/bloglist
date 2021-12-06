@@ -29,13 +29,23 @@ blogsRouter.post('/', async (request, response) => {
 
   const user = request.user
 
-  const blog = new Blog({
-    url: body.url,
-    title: body.title,
-    date: body.date,
-    user: user.id,
-    likes: 0
-  })
+  const blog = body.type === 'link' ?
+    new Blog({
+      title: body.title,
+      type: body.type,
+      url: body.url,
+      date: body.date,
+      user: user.id,
+      likes: 0
+    }) :
+    new Blog({
+      title: body.title,
+      type: body.type,
+      text: body.text,
+      date: body.date,
+      user: user.id,
+      likes: 0
+    })
 
   const savedBlog = await blog.save()
   user.blogs = user.blogs.concat(savedBlog._id)

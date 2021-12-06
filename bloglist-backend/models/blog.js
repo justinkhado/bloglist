@@ -5,10 +5,9 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  url: {
-    type: String,
-    required: true
-  },
+  type: String,
+  text: String,
+  url: String,
   likes: Number,
   date: Date,
   user: {

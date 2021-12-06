@@ -11,6 +11,8 @@ import {
   Container,
   Button,
   TextField,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography
 } from '@mui/material'
 
@@ -20,16 +22,30 @@ const BlogForm = () => {
   const user = useSelector(state => state.user)
 
   const [title, setTitle] = useState('')
+  const [type, setType] = useState('link')
   const [url, setUrl] = useState('')
+  const [text, setText] = useState('')
+
+  const handleTypeChange = (event, newType) => {
+    setType(newType)
+  }
 
   const handleCreateBlog = async (event) => {
     event.preventDefault()
 
-    const blog = {
-      title: title,
-      url: url,
-      date: new Date()
-    }
+    const blog = type === 'link' ?
+      {
+        title,
+        type,
+        url,
+        date: new Date()
+      } :
+      {
+        title,
+        type,
+        text,
+        date: new Date()
+      }
 
     try {
       await dispatch(createBlog(blog, user))
@@ -68,22 +84,28 @@ const BlogForm = () => {
       >
         <CardContent>
           <Typography variant='h5'>share new blog</Typography>
+          <ToggleButtonGroup
+            sx={{ m: 1 }}
+            size='small'
+            value={type}
+            onChange={handleTypeChange}
+            exclusive
+          >
+            <ToggleButton value='link'>link</ToggleButton>
+            <ToggleButton value='text'>text</ToggleButton>
+          </ToggleButtonGroup>
           <form onSubmit={handleCreateBlog}>
-            <div>
+            <TextField
+              label='title'
+              value={title}
+              onChange={event => setTitle(event.target.value)}
+              margin='dense'
+              size='small'
+              fullWidth
+              required
+            />
+            {type === 'link' ?
               <TextField
-                id='title-input'
-                label='title'
-                value={title}
-                onChange={event => setTitle(event.target.value)}
-                margin='dense'
-                size='small'
-                fullWidth
-                required
-              />
-            </div>
-            <div>
-              <TextField
-                id='url-input'
                 label='url'
                 value={url}
                 onChange={event => setUrl(event.target.value)}
@@ -91,11 +113,20 @@ const BlogForm = () => {
                 size='small'
                 fullWidth
                 required
+              /> :
+              <TextField
+                label='text'
+                value={text}
+                onChange={event => setText(event.target.value)}
+                margin='dense'
+                rows={4}
+                multiline
+                fullWidth
+                required
               />
-            </div>
+            }
             <Button
               sx={{ mt: 2 }}
-              id='submit-blog-form'
               type='submit'
               variant='contained'
             >
