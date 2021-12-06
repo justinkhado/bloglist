@@ -27,7 +27,8 @@ const BlogForm = () => {
 
     const blog = {
       title: title,
-      url: url
+      url: url,
+      date: new Date()
     }
 
     try {

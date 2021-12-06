@@ -14,7 +14,6 @@ import LoginForm from './components/LoginForm'
 import NavBar from './components/NavBar'
 import Notification from './components/Notification'
 import UserBlogs from './components/User/UserBlogs'
-import Users from './components/Users'
 
 import { initializeBlogs } from './reducers/blogReducer'
 import { loggedInUser } from './reducers/userReducer'
@@ -64,7 +63,6 @@ const App = () => {
         <Route path='/' element={<div><Blogs /></div>} />
         <Route path='/blogs/:id' element={<Blog blog={blog} />} />
         <Route path='/blogs/submit' element={<BlogForm />} />
-        <Route path='/users' element={<Users />} />
         <Route path='/users/:id' element={<UserBlogs user={user} />} />
       </Routes>
     </Container>

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog
-    .find({}).populate('user', { username: 1, name: 1 })
+    .find({}).populate('user', { username: 1 })
   response.json(blogs)
 })
 
@@ -32,6 +32,7 @@ blogsRouter.post('/', async (request, response) => {
   const blog = new Blog({
     url: body.url,
     title: body.title,
+    date: body.date,
     user: user.id,
     likes: 0
   })

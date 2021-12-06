@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import LikeCount from './LikeCount'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -7,18 +7,51 @@ import {
   CardActionArea,
   CardActions,
   CardContent,
+  MenuItem,
+  Select,
   Typography
 } from '@mui/material'
 
 const Blogs = () => {
+  const [sort, setSort] = useState('date')
   const blogs = useSelector((state) => {
     return state.blogs
   })
 
-  const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes)
+  const handleSortChange = (event) => {
+    setSort(event.target.value)
+  }
+
+  let sortedBlogs
+  if (sort === 'date') {
+    sortedBlogs = blogs.sort((a, b) => b.date - a.date)
+  }
+  else{
+    sortedBlogs = blogs.sort((a, b) => b.likes - a.likes)
+  }
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
+      <Select
+        sx={{
+          background: 'white',
+          alignSelf: 'flex-end',
+          margin: 1,
+          marginRight: 3,
+          paddingLeft: 1
+        }}
+        variant='standard'
+        value={sort}
+        onChange={handleSortChange}
+      >
+        <MenuItem value={'date'}>date</MenuItem>
+        <MenuItem value={'likes'}>likes</MenuItem>
+      </Select>
       {sortedBlogs.map(blog =>
         <Card
           sx={{
@@ -58,7 +91,7 @@ const Blogs = () => {
                   {blog.comments.length} comment(s)
                 </Typography>
                 <Typography variant='body2' color='text.secondary'>
-                  submitted by {blog.user.username}
+                  submitted on {new Date(blog.date).toLocaleDateString()} by {blog.user.username}
                 </Typography>
               </div>
             </CardContent>

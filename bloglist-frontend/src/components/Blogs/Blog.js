@@ -78,7 +78,7 @@ const Blog = ({ blog }) => {
             }}
           >
             <Typography variant='body2' color='text.secondary'>
-              {'submitted by '}
+              {`submitted on ${new Date(blog.date).toLocaleDateString()} by `}
               <MuiLink
                 sx={{ textDecoration: 'none' }}
                 component={Link}

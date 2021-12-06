@@ -33,9 +33,6 @@ const NavBar = () => {
         <Button color='inherit' component={Link} to='/'>
           blogs
         </Button>
-        <Button color='inherit' component={Link} to='/users'>
-          users
-        </Button>
         <Button color='inherit' component={Link} to='/blogs/submit'>
           submit
         </Button>

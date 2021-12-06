@@ -16,7 +16,7 @@ const UserBlogs = ({ user }) => {
     return null
   }
 
-  const sortedBlogs = user.blogs.sort((a, b) => b.likes - a.likes)
+  const sortedBlogs = user.blogs.sort((a, b) => b.date - a.date)
 
   return (
     <Card sx={{ margin: 2 }}>
@@ -37,10 +37,14 @@ const UserBlogs = ({ user }) => {
           <TableHead>
             <TableRow>
               <TableCell>
-                <Typography>blogs</Typography>
+                <Typography sx={{ fontWeight:'bold' }}>
+                  blogs
+                </Typography>
               </TableCell>
               <TableCell>
-                <Typography>likes</Typography>
+                <Typography sx={{ fontWeight:'bold' }}>
+                  likes
+                </Typography>
               </TableCell>
             </TableRow>
           </TableHead>
