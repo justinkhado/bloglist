@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../reducers/userReducer'
+import { register } from '../reducers/usersReducer'
 import { setNotification } from '../reducers/notificationReducer'
-
 import {
   Box,
   Button,
   Card,
   CardContent,
   Container,
+  Link as MuiLink,
   TextField,
   Typography
 } from '@mui/material'
@@ -18,6 +19,11 @@ const LoginForm = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [registering, setRegistering] = useState(false)
+
+  const handleIsRegistering = () => {
+    setRegistering(!registering)
+  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -35,6 +41,31 @@ const LoginForm = () => {
     }
   }
 
+  const handleRegister = async (event) => {
+    event.preventDefault()
+
+    try {
+      await dispatch(register({ username, password }))
+      await dispatch(setUser(username, password))
+    }
+    catch (exception) {
+      if (username.length < 6) {
+        dispatch(setNotification({
+          message: 'username must be at least 5 characters',
+          error: true
+        }))
+      }
+      else if (password.length < 9) {
+        dispatch(setNotification({
+          message: 'password must be at least 8 characters',
+          error: true
+        }))
+      }
+      setUsername('')
+      setPassword('')
+    }
+  }
+
   return (
     <Container maxWidth='xs'>
       <Card
@@ -45,15 +76,23 @@ const LoginForm = () => {
         <CardContent>
           <Box
             sx={{
-              mt: 2,
+              mt: 1,
               display: 'flex',
               flexDirection: 'column'
             }}
             component='form'
-            onSubmit={handleLogin}
+            onSubmit={
+              registering ? handleRegister : handleLogin
+            }
           >
-            <Typography sx={{ alignSelf: 'center' }} variant='h4'>
-              log in
+            <Typography
+              sx={{
+                alignSelf: 'center',
+                mb: 1
+              }}
+              variant='h4'
+            >
+              {registering ? 'register' : 'log in'}
             </Typography>
             <TextField
               label='username'
@@ -78,8 +117,21 @@ const LoginForm = () => {
               type='submit'
               fullWidth
             >
-              login
+              {registering ? 'register' : 'log in'}
             </Button>
+            <MuiLink
+              sx={{
+                mt: 2,
+                alignSelf: 'flex-end'
+              }}
+              component={Button}
+              onClick={handleIsRegistering}
+            >
+              {registering
+                ? 'Have an account? Log in'
+                : 'Not signed up? Register'
+              }
+            </MuiLink>
           </Box>
         </CardContent>
       </Card>

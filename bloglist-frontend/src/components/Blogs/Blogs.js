@@ -56,7 +56,8 @@ const Blogs = () => {
         <Card
           sx={{
             display: 'flex',
-            margin: 2
+            m: 2,
+            mb: 0
           }}
           elevation={5}
           key={blog.id}
