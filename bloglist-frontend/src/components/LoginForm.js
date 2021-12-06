@@ -47,6 +47,9 @@ const LoginForm = () => {
     try {
       await dispatch(register({ username, password }))
       await dispatch(setUser(username, password))
+      dispatch(setNotification({
+        message: 'account successfully created'
+      }))
     }
     catch (exception) {
       if (username.length < 6) {
