@@ -77,7 +77,9 @@ const Blog = ({ blog }) => {
                 {blog.url}
               </Typography>
             </MuiLink> :
-            <Typography>{blog.text}</Typography>
+            <Card variant='outlined' square>
+              <Typography m={1}>{blog.text}</Typography>
+            </Card>
           }
           <div
             style={{
