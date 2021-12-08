@@ -4,8 +4,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import BlogComments from './BlogComments'
 import LikeCount from './LikeCount'
 import { remove } from '../../reducers/blogReducer'
-import { setNotification } from '../../reducers/notificationReducer'
 import { logOut } from '../../reducers/currentUserReducer'
+import { setNotification } from '../../reducers/notificationReducer'
+import { removeFromUserBlogs } from '../../reducers/usersReducer'
 import {
   Button,
   Card,
@@ -24,6 +25,7 @@ const Blog = ({ blog }) => {
     if (window.confirm(`Remove blog "${blog.title}" by ${blog.author}`)) {
       try {
         await dispatch(remove(blog))
+        dispatch(removeFromUserBlogs(blog, user))
         navigate('/')
         dispatch(setNotification({
           message: 'blog successfully deleted'

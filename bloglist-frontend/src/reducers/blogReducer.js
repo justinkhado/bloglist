@@ -36,13 +36,12 @@ export const initializeBlogs = () => {
 
 export const createBlog = (blog, user) => {
   return async dispatch => {
-    const returnedBlog = await blogService.create(blog)
     const newBlog = {
-      ...returnedBlog,
+      ...blog,
       user: {
         username: user.username,
         name: user.name,
-        id: returnedBlog.user
+        id: blog.user
       }
     }
     dispatch({

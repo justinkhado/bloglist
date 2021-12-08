@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { createBlog } from '../../reducers/blogReducer'
 import { setNotification } from '../../reducers/notificationReducer'
 import { logOut } from '../../reducers/currentUserReducer'
-
+import { addToUserBlogs } from '../../reducers/usersReducer'
+import blogService from '../../services/blogs'
 import {
   Card,
   CardContent,
@@ -48,7 +49,9 @@ const BlogForm = () => {
       }
 
     try {
-      await dispatch(createBlog(blog, user))
+      const returnedBlog = await blogService.create(blog)
+      await dispatch(createBlog(returnedBlog, user))
+      dispatch(addToUserBlogs(returnedBlog, user))
       setTitle('')
       setUrl('')
 
