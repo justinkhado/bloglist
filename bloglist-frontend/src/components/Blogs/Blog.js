@@ -43,6 +43,11 @@ const Blog = ({ blog }) => {
   }
 
   if (!blog) {
+    navigate('/')
+    dispatch(setNotification({
+      message: 'page no longer exists',
+      error: true
+    }))
     return null
   }
 
