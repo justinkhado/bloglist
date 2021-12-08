@@ -16,7 +16,7 @@ import {
 
 const BlogComments = ({ blog }) => {
   const dispatch = useDispatch()
-  const currentUser = useSelector(state => state.user)
+  const currentUser = useSelector(state => state.currentUser)
   const [comment, setComment] = useState('')
 
   const handleComment = async () => {

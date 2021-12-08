@@ -18,7 +18,7 @@ const LikeCount = ({ blog }) => {
   }
 
   const dispatch = useDispatch()
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.currentUser)
 
   const handleLike = () => {
     const updatedBlog = user.likedBlogs.includes(blog.id)
@@ -32,9 +32,6 @@ const LikeCount = ({ blog }) => {
           id => id !== blog.id
         ) }
       : { ...user, likedBlogs: user.likedBlogs.concat(blog.id) }
-
-    console.log(updatedUser)
-    console.log(updatedUser.likedBlogs)
 
     dispatch(like(updatedBlog, updatedUser))
     dispatch(updateLikedBlogs(updatedUser.likedBlogs))

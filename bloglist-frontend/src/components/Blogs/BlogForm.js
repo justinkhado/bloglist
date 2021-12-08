@@ -19,7 +19,7 @@ import {
 const BlogForm = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.currentUser)
 
   const [title, setTitle] = useState('')
   const [type, setType] = useState('link')

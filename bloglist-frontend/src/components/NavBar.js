@@ -8,7 +8,7 @@ const NavBar = () => {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const dispatch = useDispatch()
-  const currentUser = useSelector(state => state.user)
+  const currentUser = useSelector(state => state.currentUser)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)

@@ -1,5 +1,5 @@
-import loginService from '../services/login'
 import blogService from '../services/blogs'
+import loginService from '../services/login'
 
 const currentUserReducer = (state=null, action) => {
   switch(action.type) {
@@ -20,14 +20,14 @@ const currentUserReducer = (state=null, action) => {
 }
 
 export const loggedInUser = () => {
-  return dispatch => {
+  return async dispatch => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      blogService.setToken(user.token)
+      const currentUser = JSON.parse(loggedUserJSON)
+      blogService.setToken(currentUser.token)
       dispatch({
         type: 'LOGGED_USER',
-        data: user
+        data: currentUser
       })
     }
   }
@@ -60,6 +60,11 @@ export const logOut = () => {
 
 export const updateLikedBlogs = (likedBlogs) => {
   return dispatch => {
+    const currentUser = JSON.parse(window.localStorage.getItem('loggedBlogAppUser'))
+    const updatedUser = { ...currentUser, likedBlogs }
+    window.localStorage.setItem(
+      'loggedBlogAppUser', JSON.stringify(updatedUser)
+    )
     dispatch({
       type: 'USER_LIKES',
       data: likedBlogs

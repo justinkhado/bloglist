@@ -23,3 +23,6 @@ Content-Type: application/json
     "username": "kha",
     "password": "asdfasdf"
 }
+
+###
+GET http://localhost:3003/api/users/61b0151ad0c21dd581e4e578

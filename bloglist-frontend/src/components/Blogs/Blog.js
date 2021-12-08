@@ -18,7 +18,7 @@ import {
 const Blog = ({ blog }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.currentUser)
 
   const handleDelete = async () => {
     if (window.confirm(`Remove blog "${blog.title}" by ${blog.author}`)) {

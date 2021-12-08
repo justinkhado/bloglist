@@ -30,7 +30,7 @@ const App = () => {
     dispatch(initializeUsers())
   }, [dispatch])
 
-  const currentUser = useSelector(state => state.user)
+  const currentUser = useSelector(state => state.currentUser)
   const users = useSelector(state => state.users)
   const blogs = useSelector(state => state.blogs)
 
