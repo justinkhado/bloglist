@@ -121,6 +121,7 @@ const LoginForm = () => {
               value={password}
               onChange={({ target }) => setPassword(target.value)}
               margin='dense'
+              autoComplete='off'
               required
             />
             {registering &&
@@ -130,6 +131,7 @@ const LoginForm = () => {
                 value={passwordConfirmation}
                 onChange={({ target }) => setPasswordConfirmation(target.value)}
                 margin='dense'
+                autoComplete='off'
                 required
               />
             }

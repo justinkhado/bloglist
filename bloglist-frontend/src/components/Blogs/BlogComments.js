@@ -99,9 +99,9 @@ const BlogComments = ({ blog }) => {
                 <MuiLink
                   sx={{ textDecoration: 'none' }}
                   component={Link}
-                  to={`/users/${blog.user.id}`}
+                  to={`/users/${commentObject.userId}`}
                 >
-                  {blog.user.username}
+                  {commentObject.username}
                 </MuiLink>
               </Typography>
             </Card>
