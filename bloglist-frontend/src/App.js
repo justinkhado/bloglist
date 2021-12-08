@@ -10,6 +10,7 @@ import Blog from './components/Blogs/Blog'
 import BlogForm from './components/Blogs/BlogForm'
 import Blogs from './components/Blogs/Blogs'
 import Header from './components/Header'
+import LikedBlogs from './components/User/LikedBlogs'
 import LoginForm from './components/LoginForm'
 import NavBar from './components/NavBar'
 import Notification from './components/Notification'
@@ -64,6 +65,7 @@ const App = () => {
         <Route path='/blogs/:id' element={<Blog blog={blog} />} />
         <Route path='/blogs/submit' element={<BlogForm />} />
         <Route path='/users/:id' element={<UserBlogs user={user} />} />
+        <Route path='/users/:id/liked' element={<LikedBlogs />} />
       </Routes>
     </Container>
   )

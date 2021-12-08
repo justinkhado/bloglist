@@ -25,7 +25,7 @@ const UserBlogs = ({ user }) => {
 
   let sortedBlogs
   if (sort === 'date') {
-    sortedBlogs = user.blogs.sort((a, b) => b.date - a.date)
+    sortedBlogs = user.blogs.sort((a, b) => new Date(b.date) - new Date(a.date))
   }
   else{
     sortedBlogs = user.blogs.sort((a, b) => b.likes - a.likes)
@@ -52,7 +52,7 @@ const UserBlogs = ({ user }) => {
             <TableRow>
               <TableCell>
                 <Typography sx={{ fontWeight:'bold' }}>
-                  my blogs
+                  title
                 </Typography>
               </TableCell>
               <TableCell>

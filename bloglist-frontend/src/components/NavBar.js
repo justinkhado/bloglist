@@ -58,6 +58,13 @@ const NavBar = () => {
             my blogs
           </MenuItem>
           <MenuItem
+            component={Link}
+            to={`/users/${currentUser.id}/liked`}
+            onClick={handleClose}
+          >
+            liked blogs
+          </MenuItem>
+          <MenuItem
             color='inherit'
             onClick={() => dispatch(logOut())}
             component={Link}

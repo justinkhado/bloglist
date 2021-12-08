@@ -23,7 +23,7 @@ const Blogs = () => {
 
   let sortedBlogs
   if (sort === 'date') {
-    sortedBlogs = blogs.sort((a, b) => b.date - a.date)
+    sortedBlogs = blogs.sort((a, b) => new Date(b.date) - new Date(a.date))
   }
   else{
     sortedBlogs = blogs.sort((a, b) => b.likes - a.likes)
