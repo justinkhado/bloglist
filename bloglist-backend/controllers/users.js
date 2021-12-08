@@ -16,7 +16,8 @@ usersRouter.post('/', async (request, response) => {
   const user = new User ({
     username: body.username,
     passwordHash,
-    blogs: []
+    blogs: [],
+    likedBlogs: []
   })
 
   const savedUser = await user.save()
@@ -29,6 +30,17 @@ usersRouter.get('/', async (request, response) => {
     .find({}).populate('blogs', { url: 1, title: 1, likes: 1 })
 
   response.json(users)
+})
+
+usersRouter.put('/:id', async (request, response) => {
+  const body = request.body
+
+  const user = {
+    likedBlogs: body.likedBlogs
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(request.params.id, user, { new: true })
+  response.json(updatedUser)
 })
 
 module.exports = usersRouter

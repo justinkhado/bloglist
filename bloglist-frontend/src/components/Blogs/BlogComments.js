@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { addComment } from '../../reducers/blogReducer'
 import { setNotification } from '../../reducers/notificationReducer'
-import { logOut } from '../../reducers/userReducer'
+import { logOut } from '../../reducers/currentUserReducer'
 import {
   Button,
   Card,

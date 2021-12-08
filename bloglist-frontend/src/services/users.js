@@ -7,9 +7,14 @@ const getAll = async () => {
   return response.data
 }
 
+const update = async (id, newObject) => {
+  const response = await axios.put(`${baseUrl}/${id}`, newObject)
+  return response.data
+}
+
 const register = async (credentials) => {
   const response = await axios.post(baseUrl, credentials)
   return response.data
 }
 
-export default { getAll, register }
+export default { getAll, update, register }

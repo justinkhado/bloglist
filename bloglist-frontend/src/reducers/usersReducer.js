@@ -21,9 +21,9 @@ export const initializeUsers = () => {
   }
 }
 
-export const register = (credentials) => {
+export const register = (username, password) => {
   return async dispatch => {
-    const user = await userService.register(credentials)
+    const user = await userService.register({ username, password })
     dispatch({
       type: 'REGISTER',
       data: user

@@ -5,7 +5,7 @@ import BlogComments from './BlogComments'
 import LikeCount from './LikeCount'
 import { remove } from '../../reducers/blogReducer'
 import { setNotification } from '../../reducers/notificationReducer'
-import { logOut } from '../../reducers/userReducer'
+import { logOut } from '../../reducers/currentUserReducer'
 import {
   Button,
   Card,

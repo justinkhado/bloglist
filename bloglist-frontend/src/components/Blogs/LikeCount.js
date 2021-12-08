@@ -1,11 +1,13 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { like } from '../../reducers/blogReducer'
+import { updateLikedBlogs } from '../../reducers/currentUserReducer'
 import {
   IconButton,
   Typography
 } from '@mui/material'
-import FavoriteBorderIcon from '@mui/icons-material/Favorite'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 
 const LikeCount = ({ blog }) => {
   const style = {
@@ -16,10 +18,26 @@ const LikeCount = ({ blog }) => {
   }
 
   const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
 
   const handleLike = () => {
-    const updatedBlog = { ...blog, likes: blog.likes + 1 }
-    dispatch(like(updatedBlog))
+    const updatedBlog = user.likedBlogs.includes(blog.id)
+      ? { ...blog, likes: blog.likes - 1 }
+      : { ...blog, likes: blog.likes + 1 }
+
+    const updatedUser = user.likedBlogs.includes(blog.id)
+      ? {
+        ...user,
+        likedBlogs: user.likedBlogs.filter(
+          id => id !== blog.id
+        ) }
+      : { ...user, likedBlogs: user.likedBlogs.concat(blog.id) }
+
+    console.log(updatedUser)
+    console.log(updatedUser.likedBlogs)
+
+    dispatch(like(updatedBlog, updatedUser))
+    dispatch(updateLikedBlogs(updatedUser.likedBlogs))
   }
 
   return (
@@ -29,10 +47,13 @@ const LikeCount = ({ blog }) => {
       </Typography>
       <IconButton
         sx={{ paddingTop: 0 }}
-        color='inherit'
+        color='primary'
         onClick={() => handleLike()}
       >
-        <FavoriteBorderIcon />
+        {user.likedBlogs.includes(blog.id)
+          ? <FavoriteIcon />
+          : <FavoriteBorderIcon />
+        }
       </IconButton>
     </div>
   )

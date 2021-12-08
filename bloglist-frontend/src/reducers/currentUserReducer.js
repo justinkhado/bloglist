@@ -1,7 +1,7 @@
 import loginService from '../services/login'
 import blogService from '../services/blogs'
 
-const userReducer = (state=null, action) => {
+const currentUserReducer = (state=null, action) => {
   switch(action.type) {
   case 'LOGGED_USER':
     return action.data
@@ -9,6 +9,11 @@ const userReducer = (state=null, action) => {
     return action.data
   case 'LOG_OUT':
     return null
+  case 'USER_LIKES':
+    return {
+      ...state,
+      likedBlogs: action.data
+    }
   default:
     return state
   }
@@ -53,4 +58,13 @@ export const logOut = () => {
   }
 }
 
-export default userReducer
+export const updateLikedBlogs = (likedBlogs) => {
+  return dispatch => {
+    dispatch({
+      type: 'USER_LIKES',
+      data: likedBlogs
+    })
+  }
+}
+
+export default currentUserReducer

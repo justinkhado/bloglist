@@ -1,4 +1,5 @@
 import blogService from '../services/blogs'
+import usersService from '../services/users'
 
 const blogReducer = (state=[], action) => {
   switch(action.type) {
@@ -51,9 +52,10 @@ export const createBlog = (blog, user) => {
   }
 }
 
-export const like = (blog) => {
+export const like = (blog, user) => {
   return async dispatch => {
     await blogService.update(blog.id, blog)
+    await usersService.update(user.id, user)
     dispatch({
       type: 'LIKE',
       data: blog

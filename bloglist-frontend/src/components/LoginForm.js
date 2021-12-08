@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { setUser } from '../reducers/userReducer'
+import { setUser } from '../reducers/currentUserReducer'
 import { register } from '../reducers/usersReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import {
@@ -19,6 +19,7 @@ const LoginForm = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [passwordConfirmation, setPasswordConfirmation] = useState('')
   const [registering, setRegistering] = useState(false)
 
   const handleIsRegistering = () => {
@@ -44,8 +45,16 @@ const LoginForm = () => {
   const handleRegister = async (event) => {
     event.preventDefault()
 
+    if (password !== passwordConfirmation) {
+      dispatch(setNotification({
+        message: 'password does not match',
+        error: true
+      }))
+      return
+    }
+
     try {
-      await dispatch(register({ username, password }))
+      await dispatch(register(username, password))
       await dispatch(setUser(username, password))
       dispatch(setNotification({
         message: 'account successfully created'
@@ -66,6 +75,7 @@ const LoginForm = () => {
       }
       setUsername('')
       setPassword('')
+      setPasswordConfirmation('')
     }
   }
 
@@ -113,6 +123,16 @@ const LoginForm = () => {
               margin='dense'
               required
             />
+            {registering &&
+              <TextField
+                label='confirm password'
+                type='password'
+                value={passwordConfirmation}
+                onChange={({ target }) => setPasswordConfirmation(target.value)}
+                margin='dense'
+                required
+              />
+            }
             <Button
               sx={{ mt: 2 }}
               variant='contained'

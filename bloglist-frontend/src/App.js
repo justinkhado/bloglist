@@ -16,7 +16,7 @@ import Notification from './components/Notification'
 import UserBlogs from './components/User/UserBlogs'
 
 import { initializeBlogs } from './reducers/blogReducer'
-import { loggedInUser } from './reducers/userReducer'
+import { loggedInUser } from './reducers/currentUserReducer'
 import { initializeUsers } from './reducers/usersReducer'
 
 import { Container } from '@mui/material'

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { createBlog } from '../../reducers/blogReducer'
 import { setNotification } from '../../reducers/notificationReducer'
-import { logOut } from '../../reducers/userReducer'
+import { logOut } from '../../reducers/currentUserReducer'
 
 import {
   Card,
