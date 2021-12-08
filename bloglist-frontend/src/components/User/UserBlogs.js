@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import SortBy from '../SortBy'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import SortBy from '../SortBy'
 import {
   Card,
   CardContent,
@@ -19,16 +20,21 @@ const UserBlogs = ({ user }) => {
 
   const [sort, setSort] = useState('date')
 
+  const blogs = useSelector(state => state.blogs)
+  const userBlogs = blogs.filter(blog =>
+    blog.user.id === user.id
+  )
+
   const handleSortChange = (event) => {
     setSort(event.target.value)
   }
 
   let sortedBlogs
   if (sort === 'date') {
-    sortedBlogs = user.blogs.sort((a, b) => new Date(b.date) - new Date(a.date))
+    sortedBlogs = userBlogs.sort((a, b) => new Date(b.date) - new Date(a.date))
   }
   else{
-    sortedBlogs = user.blogs.sort((a, b) => b.likes - a.likes)
+    sortedBlogs = userBlogs.sort((a, b) => b.likes - a.likes)
   }
 
   return (
