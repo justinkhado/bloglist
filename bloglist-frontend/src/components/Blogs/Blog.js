@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import EditBlogForm from './EditBlogForm'
 import BlogComments from './BlogComments'
 import LikeCount from './LikeCount'
 import { remove } from '../../reducers/blogReducer'
@@ -20,6 +21,7 @@ const Blog = ({ blog }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(state => state.currentUser)
+  const [toggleEdit, setToggleEdit] = useState(false)
 
   const handleDelete = async () => {
     if (window.confirm(`Remove blog "${blog.title}" by ${blog.author}`)) {
@@ -67,21 +69,24 @@ const Blog = ({ blog }) => {
           <Typography variant='h6'>
             {blog.title}
           </Typography>
-          {blog.type === 'link' ?
-            <MuiLink
-              href={
-                blog.url.indexOf('http') !== -1 ?
-                  blog.url :
-                  `//${blog.url}`
+          {toggleEdit ?
+            <EditBlogForm blog={blog} setToggleEdit={setToggleEdit} /> :
+            <div>
+              {blog.type === 'link' ?
+                <MuiLink
+                  href={
+                    blog.url.indexOf('http') !== -1 ? blog.url : `//${blog.url}`
+                  }
+                >
+                  <Typography sx={{ overflowWrap: 'anywhere' }}>
+                    {blog.url}
+                  </Typography>
+                </MuiLink> :
+                <Card variant='outlined' square>
+                  <Typography m={1}>{blog.text}</Typography>
+                </Card>
               }
-            >
-              <Typography sx={{ overflowWrap: 'anywhere' }}>
-                {blog.url}
-              </Typography>
-            </MuiLink> :
-            <Card variant='outlined' square>
-              <Typography m={1}>{blog.text}</Typography>
-            </Card>
+            </div>
           }
           <div
             style={{
@@ -101,14 +106,34 @@ const Blog = ({ blog }) => {
               </MuiLink>
             </Typography>
             {user.username === blog.user.username &&
-              <Button
-                variant='contained'
-                color='error'
-                size='small'
-                onClick={() => handleDelete(blog)}
-              >
-                delete
-              </Button>
+              <div>
+                {!toggleEdit ?
+                  <Button
+                    sx={{ mr: 1 }}
+                    variant='contained'
+                    color='success'
+                    size='small'
+                    onClick={() => setToggleEdit(true)}
+                  >
+                    edit
+                  </Button> :
+                  <Button
+                    sx={{ mr: 1 }}
+                    size='small'
+                    onClick={() => setToggleEdit(false)}
+                  >
+                    cancel
+                  </Button>
+                }
+                <Button
+                  variant='contained'
+                  color='error'
+                  size='small'
+                  onClick={() => handleDelete()}
+                >
+                  delete
+                </Button>
+              </div>
             }
           </div>
         </CardContent>

@@ -19,6 +19,15 @@ const blogReducer = (state=[], action) => {
         ...blog, comments: blog.comments.concat(action.data.commentObject)
       }
     )
+  case 'EDIT_URL':
+    return state.map(blog =>
+      blog.id !== action.data.id ? blog : { ...blog, url: action.data.url }
+    )
+
+  case 'EDIT_TEXT':
+    return state.map(blog =>
+      blog.id !== action.data.id ? blog : { ...blog, text: action.data.text }
+    )
   default:
     return state
   }
@@ -53,7 +62,7 @@ export const createBlog = (blog, user) => {
 
 export const like = (blog, user) => {
   return async dispatch => {
-    await blogService.update(blog.id, blog)
+    await blogService.update(blog.id, { likes: blog.likes })
     await usersService.update(user.id, user)
     dispatch({
       type: 'LIKE',
@@ -78,6 +87,26 @@ export const addComment = (id, commentObject) => {
     dispatch({
       type: 'COMMENT',
       data: { id, commentObject }
+    })
+  }
+}
+
+export const editUrl = (id, url) => {
+  return async dispatch => {
+    await blogService.update(id, { url })
+    dispatch({
+      type: 'EDIT_URL',
+      data: { id, url }
+    })
+  }
+}
+
+export const editText = (id, text) => {
+  return async dispatch => {
+    await blogService.update(id, { text })
+    dispatch({
+      type: 'EDIT_TEXT',
+      data: { id, text }
     })
   }
 }
