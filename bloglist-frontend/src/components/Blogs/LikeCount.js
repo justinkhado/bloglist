@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { like } from '../../reducers/blogReducer'
 import { updateLikedBlogs } from '../../reducers/currentUserReducer'
+import { updateUserLikedBlogs } from '../../reducers/usersReducer'
 import {
   IconButton,
   Typography
@@ -35,6 +36,7 @@ const LikeCount = ({ blog }) => {
 
     dispatch(like(updatedBlog, updatedUser))
     dispatch(updateLikedBlogs(updatedUser.likedBlogs))
+    dispatch(updateUserLikedBlogs(updatedBlog, user))
   }
 
   return (

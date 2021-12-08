@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import LikeCount from './LikeCount'
+import SortBy from '../SortBy'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {
@@ -7,8 +8,6 @@ import {
   CardActionArea,
   CardActions,
   CardContent,
-  MenuItem,
-  Select,
   Typography
 } from '@mui/material'
 
@@ -37,21 +36,7 @@ const Blogs = () => {
         flexDirection: 'column'
       }}
     >
-      <Select
-        sx={{
-          background: 'white',
-          alignSelf: 'flex-end',
-          margin: 1,
-          marginRight: 3,
-          paddingLeft: 1
-        }}
-        variant='standard'
-        value={sort}
-        onChange={handleSortChange}
-      >
-        <MenuItem value={'date'}>date</MenuItem>
-        <MenuItem value={'likes'}>likes</MenuItem>
-      </Select>
+      <SortBy sort={sort} handleSortChange={handleSortChange} />
       {sortedBlogs.map(blog =>
         <Card
           sx={{

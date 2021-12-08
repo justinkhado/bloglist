@@ -16,6 +16,17 @@ const usersReducer = (state=[], action) => {
         ? user
         : { ...user, blogs: user.blogs.filter(b => b.id !== action.data.blogId) }
     )
+  case 'LIKE_USER_BLOG':
+    return state.map(user =>
+      user.id !== action.data.userId
+        ? user
+        : {
+          ...user,
+          blogs: user.blogs.map(b =>
+            b.id !== action.data.blog.id ? b : action.data.blog
+          )
+        }
+    )
   default:
     return state
   }
@@ -55,6 +66,15 @@ export const removeFromUserBlogs = (blog, user) => {
     dispatch({
       type: 'REMOVE_USER_BLOG',
       data: { userId: user.id, blogId: blog.id }
+    })
+  }
+}
+
+export const updateUserLikedBlogs = (blog, user) => {
+  return dispatch => {
+    dispatch({
+      type: 'LIKE_USER_BLOG',
+      data: { userId: user.id, blog }
     })
   }
 }

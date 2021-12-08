@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import SortBy from '../SortBy'
 import { Link } from 'react-router-dom'
 import {
   Card,
@@ -16,7 +17,19 @@ const UserBlogs = ({ user }) => {
     return null
   }
 
-  const sortedBlogs = user.blogs.sort((a, b) => b.date - a.date)
+  const [sort, setSort] = useState('date')
+
+  const handleSortChange = (event) => {
+    setSort(event.target.value)
+  }
+
+  let sortedBlogs
+  if (sort === 'date') {
+    sortedBlogs = user.blogs.sort((a, b) => b.date - a.date)
+  }
+  else{
+    sortedBlogs = user.blogs.sort((a, b) => b.likes - a.likes)
+  }
 
   return (
     <Card sx={{ margin: 2 }}>
@@ -26,6 +39,7 @@ const UserBlogs = ({ user }) => {
           flexDirection: 'column'
         }}
       >
+        <SortBy sort={sort} handleSortChange={handleSortChange} />
         <Typography
           sx={{ alignSelf: 'center' }}
           variant='h4'
@@ -38,7 +52,7 @@ const UserBlogs = ({ user }) => {
             <TableRow>
               <TableCell>
                 <Typography sx={{ fontWeight:'bold' }}>
-                  blogs
+                  my blogs
                 </Typography>
               </TableCell>
               <TableCell>
@@ -46,18 +60,28 @@ const UserBlogs = ({ user }) => {
                   likes
                 </Typography>
               </TableCell>
+              <TableCell>
+                <Typography sx={{ fontWeight:'bold' }}>
+                  date
+                </Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {sortedBlogs.map((blog, index) =>
               <TableRow key={index}>
-                <TableCell>
+                <TableCell width='100%'>
                   <Typography component={Link} to={`/blogs/${blog.id}`}>
                     {blog.title}
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography>{blog.likes}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography>
+                    {(new Date(blog.date)).toLocaleDateString()}
+                  </Typography>
                 </TableCell>
               </TableRow>
             )}
