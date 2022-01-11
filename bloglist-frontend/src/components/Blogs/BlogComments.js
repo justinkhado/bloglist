@@ -70,7 +70,10 @@ const BlogComments = ({ blog }) => {
           multiline
         />
         <Button
-          sx={{ mt: 1 }}
+          sx={{
+            mt: 1,
+            alignSelf: 'flex-start'
+          }}
           variant='contained'
           size='small'
           onClick={handleComment}

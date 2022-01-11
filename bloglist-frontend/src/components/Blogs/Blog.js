@@ -18,6 +18,10 @@ import {
 } from '@mui/material'
 
 const Blog = ({ blog }) => {
+  if (!blog) {
+    return null
+  }
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(state => state.currentUser)
@@ -40,15 +44,6 @@ const Blog = ({ blog }) => {
         dispatch(logOut())
       }
     }
-  }
-
-  if (!blog) {
-    navigate('/')
-    dispatch(setNotification({
-      message: 'page no longer exists',
-      error: true
-    }))
-    return null
   }
 
   return (
